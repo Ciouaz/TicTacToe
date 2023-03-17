@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class Side {
+public class Character {
     public String[] Character() {
 
         String fstChar = null;
@@ -8,7 +8,7 @@ public class Side {
         while (!("X".equals(fstChar) || "X".equals(sndChar))) {
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Which character starts? Write \"X\" or \"O\"");
+            System.out.println("Which character starts? Type \"X\" or \"O\"");
 
             fstChar = scanner.next();
 
@@ -19,7 +19,7 @@ public class Side {
                 sndChar = "X";
                 fstChar = "O";
             } else {
-                System.out.println("You choose wrong character");
+                System.out.println("You type wrong character");
             }
         }
         return new String[]{fstChar, sndChar};

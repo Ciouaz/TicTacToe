@@ -1,52 +1,46 @@
-public class GameWithHuman {
-    GameWithHuman() {
 
+public class GameWithHuman {
+    GameWithHuman(String[] opponent) {
 
         WinningCheck winningCheck = new WinningCheck();
-        String[][] nullBoard = new String[4][4];
-        String win = winningCheck.winningCheck(nullBoard);
+        String[][] nullBoard;
+        String win;
 
-        while (!"X".equals(win) && !"O".equals(win)) {
+        Board board = new Board();
 
-            ChoosingOpponent choosingOpponent = new ChoosingOpponent();
-            String[] opponent = choosingOpponent.ChoosingOpponent();
+        Character side = new Character();
+        String[] character = side.Character();
 
-            Board board = new Board();
+        board.PrintEmptyBoard();
+        CharactersInsertion charactersInsertion = new CharactersInsertion();
+        Integer[] position = charactersInsertion.CharactersInsertion(opponent[0], character[0]);
+        nullBoard = board.gameBoard(position[0], position[1], character[0]);
 
-            Character side = new Character();
-            String[] character = side.Character();
+        for (int i = 1; i <= 9; i++) {
 
+            win = winningCheck.winningCheck(nullBoard);
 
-            board.PrintEmptyBoard();
-            CharactersInsertion charactersInsertion = new CharactersInsertion();
-            Integer[] position = charactersInsertion.CharactersInsertion(opponent[0]);
-            nullBoard = board.gameBoard(position[0], position[1], character[0]);
+            if ("X".equals(win) || "O".equals(win)) {
+                System.out.println("End of game. " + opponent[1 - (i % 2)] + "with \"" + character[1 - (i % 2)] + "\" won!");
+                break;
+            } else if (i == 9) {
+                System.out.println("Draw");
+                break;
+            } else {
 
-            for (int i = 1; i < 9; i++) {
+                position = charactersInsertion.CharactersInsertion(opponent[i % 2], character[i % 2]);
 
-                win = winningCheck.winningCheck(nullBoard);
+                while (nullBoard[position[0]][position[1]] != null) {
+                    System.out.println("Choose unoccupied coordinates");
+                    position = charactersInsertion.CharactersInsertion(opponent[i % 2], character[i % 2]);
+                }
 
-                if ("X".equals(win) || "O".equals(win)) {
-                    System.out.println("End of game. " + opponent[1 - (i % 2)] + "with \"" + character[1 - (i % 2)] + "\" won!");
-                    break;
+                if (i % 2 == 0) {
+                    board.gameBoard(position[0], position[1], (character[0]));
                 } else {
-
-                    position = charactersInsertion.CharactersInsertion(opponent[i % 2]);
-
-                    while (nullBoard[position[0]][position[1]] != null) {
-                        System.out.println("Choose unoccupied coordinates");
-                        position = charactersInsertion.CharactersInsertion(opponent[i % 2]);
-                    }
-
-                    if (i % 2 == 0) {
-                        board.gameBoard(position[0], position[1], (character[0]));
-                    } else {
-                        board.gameBoard(position[0], position[1], character[1]);
-                    }
+                    board.gameBoard(position[0], position[1], character[1]);
                 }
             }
-            System.out.println("Draw");
-            break;
         }
     }
 }
